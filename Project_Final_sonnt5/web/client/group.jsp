@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,7 +26,7 @@
 
                         <div id="ctl00_divUser" style="float: right; margin-right: 16px;">
                             <a href="?view=user">
-                                <span id="ctl00_lblLogIn" class="label label-success">hieundhe150417</span></a> | <a href="?logout=true" class="label label-success">logout</a> |
+                                <span id="ctl00_lblLogIn" class="label label-success">${account.username} ${student.code}</span></a> | <a href="logout" class="label label-success">logout</a> |
                             <span id="ctl00_lblCampusName" class="label label-success"> CAMPUS: FPTU-Hòa Lạc</span>
                         </div>
                         <ol class="breadcrumb">

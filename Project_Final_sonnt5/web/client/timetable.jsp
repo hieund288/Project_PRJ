@@ -6,6 +6,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,7 +27,7 @@
                         <b>View TimeTable</b>
                         <div style="float: right; margin-right: 16px;">
                             <a href="?view=user">
-                                <span class="label label-success">hieundhe150417</span></a> | <a href="?logout=true" class="label label-success">logout</a> |
+                                <span class="label label-success">${account.username}</span></a> | <a href="logout" class="label label-success">logout</a> |
                             <span class="label label-success"> CAMPUS: FPTU-Hòa Lạc</span>
                         </div>
                     </div>

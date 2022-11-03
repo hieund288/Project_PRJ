@@ -28,11 +28,12 @@ public class LoginController extends HttpServlet {
         AccountDAO accdao = new AccountDAO();
         Account acc = accdao.check(username, password);
         HttpSession session = req.getSession();
+        session.setAttribute("account", acc);
         if (acc == null) {
             req.setAttribute("error", "Account not existed!");
             req.getRequestDispatcher("client/login.jsp").forward(req, resp);
         } else {
-            session.setAttribute("account", acc);
+
             if (acc.getRole() == 1) {
                 req.getRequestDispatcher("client/teacherhome.jsp").forward(req, resp);
             } else {
