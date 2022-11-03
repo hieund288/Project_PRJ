@@ -4,11 +4,15 @@
  */
 package client.controller;
 
+import dao.AccountDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import model.Account;
 
 /**
  *
@@ -22,7 +26,9 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("client/login.jsp").forward(req, resp);
+//        ArrayList<Account> list = new AccountDAO().getAll();
+//        req.setAttribute("listAccount", list);
+        req.getRequestDispatcher("client/test.jsp").forward(req, resp);
     }
 
 }
