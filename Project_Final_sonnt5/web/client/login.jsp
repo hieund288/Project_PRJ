@@ -33,31 +33,34 @@
                         </fieldset>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div style=" border-style: groove; height:150px;">
-                        <fieldset>
-                            <legend>
-                                <span class="label label-default btn-warning">
-                                    <b style="color: white">Sinh viên, Giảng viên, Cán bộ ĐH-FPT </b>
-                                </span>
-                            </legend>
-                            <br>
-                            <div id="login">
-                                Login
-                            </div>
-                        </fieldset>
-                    </div>
+
+                <div style=" border-style: groove; height:150px;">
+                    <fieldset>
+                        <legend>
+                            <span class="label label-default btn-warning">
+                                <b style="color: white">Sinh viên, Giảng viên, Cán bộ ĐH-FPT </b>
+                            </span>
+                        </legend>
+                        <br>
+                        <form   action="login" method="POST" >
+                            <input type="text" name="username" placeholder="username"/>
+                            <input type="password" name="password" placeholder="password"/>
+                            <button value="Login">login</button>
+                            <p class="text-danger">${requestScope.error}</p>
+                        </form>
+                    </fieldset>
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
     </div>
+
+
+
+
+
+
+
+</div>
 
 
 

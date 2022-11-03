@@ -9,6 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,32 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        AccountDAO accdao = new AccountDAO();
+        Account acc = accdao.check(username, password);
+        HttpSession session = req.getSession();
+        if (acc == null) {
+            req.setAttribute("error", "Account not existed!");
+            req.getRequestDispatcher("client/login.jsp").forward(req, resp);
+        } else {
+            session.setAttribute("account", acc);
+            if (acc.getRole() == 1) {
+                req.getRequestDispatcher("client/teacherhome.jsp").forward(req, resp);
+            } else {
+                req.getRequestDispatcher("client/home.jsp").forward(req, resp);
+            }
+            /// thiếu getRoleAccount, chưa insert vào servlet và dao 
+
+//            request.getRequestDispatcher("client/home.jsp").forward(request, response);
+//            response.sendRedirect("home");
+        }
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        ArrayList<Account> list = new AccountDAO().getAll();
-//        req.setAttribute("listAccount", list);
-        req.getRequestDispatcher("client/test.jsp").forward(req, resp);
+        req.getRequestDispatcher("client/login.jsp").forward(req, resp);
     }
 
 }
