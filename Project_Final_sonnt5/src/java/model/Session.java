@@ -18,7 +18,8 @@ public class Session {
     private int roomID;
     private int groupID;
     private int timeslotID;
-    private int attendance;
+    private boolean attendance;
+    private int numberOfWeek;
     private ArrayList<Attendance> attendances = new ArrayList<>();
     private ArrayList<Group> groups = new ArrayList<>();
     private ArrayList<Room> rooms = new ArrayList<>();
@@ -27,13 +28,22 @@ public class Session {
     public Session() {
     }
 
-    public Session(int id, Date date, int roomID, int groupID, int timeslotID, int attendance) {
+    public Session(int id, Date date, int roomID, int groupID, int timeslotID, boolean attendance, int numberOfWeek) {
         this.id = id;
         this.date = date;
         this.roomID = roomID;
         this.groupID = groupID;
         this.timeslotID = timeslotID;
         this.attendance = attendance;
+        this.numberOfWeek = numberOfWeek;
+    }
+
+    public int getNumberOfWeek() {
+        return numberOfWeek;
+    }
+
+    public void setNumberOfWeek(int numberOfWeek) {
+        this.numberOfWeek = numberOfWeek;
     }
 
     public int getId() {
@@ -76,14 +86,6 @@ public class Session {
         this.timeslotID = timeslotID;
     }
 
-    public int getAttendance() {
-        return attendance;
-    }
-
-    public void setAttendance(int attendance) {
-        this.attendance = attendance;
-    }
-
     public ArrayList<Attendance> getAttendances() {
         return attendances;
     }
@@ -114,6 +116,14 @@ public class Session {
 
     public void setTimeslots(ArrayList<TimeSlot> timeslots) {
         this.timeslots = timeslots;
+    }
+
+    public boolean isAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(boolean attendance) {
+        this.attendance = attendance;
     }
 
     @Override

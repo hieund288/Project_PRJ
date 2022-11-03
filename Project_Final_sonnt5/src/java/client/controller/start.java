@@ -4,6 +4,7 @@
  */
 package client.controller;
 
+import dao.WeekDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class start extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        WeekDBContext wdbc = new WeekDBContext();
+        WeekDAO wdbc = new WeekDAO();
         //tao table Week, them 50 week trong nam 2022
         wdbc.generateWeek();
         //tao table group, all,student(chua test, chua insert rows)
