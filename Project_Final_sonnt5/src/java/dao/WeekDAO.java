@@ -112,7 +112,6 @@ public class WeekDAO extends DBContext {
             }
             return arr;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

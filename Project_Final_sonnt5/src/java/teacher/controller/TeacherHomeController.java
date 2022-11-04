@@ -4,6 +4,7 @@
  */
 package teacher.controller;
 
+import auth.controller.BaseAuthenticationController;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,16 +15,16 @@ import java.io.IOException;
  *
  * @author l
  */
-public class TeacherHomeController extends HttpServlet{
+public class TeacherHomeController extends BaseAuthenticationController {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void processPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void processGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("client/teacherhome.jsp").forward(req, resp);
-     }
-    
+    }
+
 }
