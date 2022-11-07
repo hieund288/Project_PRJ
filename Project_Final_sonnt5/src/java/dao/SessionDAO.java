@@ -22,6 +22,7 @@ import model.Group;
 import model.Lecture;
 import model.Room;
 import model.Session;
+import model.Student;
 import model.Subject;
 import model.TimeSlot;
 
@@ -70,28 +71,31 @@ public class SessionDAO extends DBContext {
     public ArrayList<Session> getListSessionStudent(int sid, java.util.Date from, java.util.Date to) {
         ArrayList<Session> sesssions = new ArrayList<>();
         String sql = "SELECT\n"
-                    + "[Session].id,\n"
-                    + "[Session].[date],\n"
-                    + "Attendance.[status],\n"
-                    + "lecture.lecName,\n"
-                    + "[Group].[Name],\n"
-                    + "Room.rName,\n"
-                    + "[Subject].[name],\n"
-                    + "timeslot.id,\n"
-                    + "TimeSlot.[description]\n"
-                    + "FROM [Session]\n"
-                    + "INNER JOIN Room ON [Session].roomID = Room.id\n"
-                    + "INNER JOIN [Group] ON [Session].groupID = [Group].id\n"
-                    + "INNER JOIN TimeSlot ON [Session].timeslotID = TimeSlot.id\n"
-                    + "INNER JOIN Attendance ON [Session].id = Attendance.sessionID\n"
-                    + "INNER JOIN Student ON  Student.id = Attendance.studentID\n"
-                    + "INNER JOIN [Subject] ON [Group].SubjectID = [Subject].id\n"
-                    + "INNER JOIN lecture ON [Group].lectureID = lecture.id\n"
-                    + "WHERE Attendance.studentID = ?\n"
-                    + "AND [Session].date >= ?\n"
-                    + "AND [Session].date <= ?";
+                + "[Session].id,\n"
+                + "[Session].[date],\n"
+                + "Attendance.[status],\n"
+                + "Student.name,\n"
+                + "Student.code,\n"
+                + "lecture.lecName,\n"
+                + "[Group].[Name],\n"
+                + "Room.rName,\n"
+                + "[Subject].[name],\n"
+                + "timeslot.id,\n"
+                + "TimeSlot.[description]\n"
+                + "FROM [Session]\n"
+                + "INNER JOIN Room ON [Session].roomID = Room.id\n"
+                + "\n"
+                + "INNER JOIN [Group] ON [Session].groupID = [Group].id\n"
+                + "INNER JOIN TimeSlot ON [Session].timeslotID = TimeSlot.id\n"
+                + "INNER JOIN Attendance ON [Session].id = Attendance.sessionID\n"
+                + "INNER JOIN Student ON  Student.id = Attendance.studentID\n"
+                + "INNER JOIN [Subject] ON [Group].SubjectID = [Subject].id\n"
+                + "INNER JOIN lecture ON [Group].lectureID = lecture.id\n"
+                + "WHERE Attendance.studentID = ?\n"
+                + "AND [Session].date >= ?\n"
+                + "AND [Session].date <= ?";
         try {
-            
+
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, sid);
             st.setDate(2, DateTimeHelper.toDateSql(from));
@@ -101,35 +105,35 @@ public class SessionDAO extends DBContext {
                 Session s = new Session();
                 s.setId(rs.getInt("id"));
                 s.setDate(rs.getDate("date"));
-                s.setStatus(rs.getBoolean("status"));
 
                 Attendance attendance = new Attendance();
-//                attendance.setStatus(rs.getBoolean("status"));
-//                s.setAttendance(attendance);
-//                lec.setId(rs.getInt("id"));
+                attendance.setStatus(rs.getBoolean("status"));
+                s.setAttendance(attendance);
+
+                Student student = new Student();
+                student.setName(rs.getString("name"));
+                student.setCode(rs.getString("code"));
+                s.setStudent(student);
 
                 Lecture lec = new Lecture();
                 lec.setLecName(rs.getString("lecName"));
                 s.setLecture(lec);
 
                 Group group = new Group();
-//                group.setId(rs.getInt("id"));
                 group.setName(rs.getString("name"));
                 s.setGroup(group);
 
                 Room room = new Room();
-//                room.setId(rs.getInt("id"));
                 room.setName(rs.getString("rName"));
                 s.setRoom(room);
 
                 Subject sub = new Subject();
-//                sub.setId(rs.getInt("id"));
                 sub.setName(rs.getString("name"));
                 s.setSubject(sub);
 
                 TimeSlot timeslot = new TimeSlot();
                 timeslot.setId(rs.getInt("id"));
-                timeslot.setDescription(rs.getString("description"));
+                timeslot.setDescription(rs.getString("description   "));
                 s.setTimeslot(timeslot);
                 sesssions.add(s);
             }
@@ -138,10 +142,9 @@ public class SessionDAO extends DBContext {
         return sesssions;
     }
 
-//    public static void main(String[] args) {
-//
-//        SessionDAO pro = new SessionDAO();
-//        System.out.println("" + pro. getStatus());
-//    }
+    public static void main(String[] args) {
 
+        SessionDAO pro = new SessionDAO();
+        System.out.println("" + pro.getListSessionStudent(2, Date.valueOf("2022-07-11"), Date.valueOf("2022-07-11")));
+    }
 }

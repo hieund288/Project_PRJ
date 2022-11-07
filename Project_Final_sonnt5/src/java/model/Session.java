@@ -25,11 +25,12 @@ public class Session {
     private Subject subject;
     private TimeSlot timeslot;
     private Lecture lecture;
+    private Student student;
 
     public Session() {
     }
 
-    public Session(int id, Date date, int roomID, int groupID, int timeslotID, boolean status, Attendance attendances, Group group, Room room, Subject subject, TimeSlot timeslot, Lecture lecture) {
+    public Session(int id, Date date, int roomID, int groupID, int timeslotID, boolean status, Attendance attendances, Group group, Room room, Subject subject, TimeSlot timeslot, Lecture lecture, Student student) {
         this.id = id;
         this.date = date;
         this.roomID = roomID;
@@ -42,7 +43,18 @@ public class Session {
         this.subject = subject;
         this.timeslot = timeslot;
         this.lecture = lecture;
+        this.student = student;
     }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    
 
     public Session(int id, Date date, int roomID, int groupID, int timeslotID, boolean status) {
         this.id = id;
