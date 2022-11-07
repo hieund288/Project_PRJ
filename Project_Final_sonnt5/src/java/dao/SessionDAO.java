@@ -4,6 +4,11 @@
  */
 package dao;
 
+/**
+ *
+ * @param args
+ */
+import helper.DateTimeHelper;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,12 +17,18 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
+import model.Attendance;
 import model.Group;
+import model.Lecture;
+import model.Room;
 import model.Session;
+import model.Subject;
+import model.TimeSlot;
 
 /**
  *
  * @author l
+ *
  */
 public class SessionDAO extends DBContext {
 
@@ -34,9 +45,8 @@ public class SessionDAO extends DBContext {
                 int roomID = rs.getInt("roomID");
                 int groupID = rs.getInt("groupID");
                 int timeslotID = rs.getInt("timeslotID");
-                boolean attendance = rs.getBoolean("attendance");
-                int numberOfWeek = rs.getInt("numberOfWeek");
-                Session a = new Session(id, date, roomID, groupID, timeslotID, attendance, numberOfWeek);
+                boolean status = rs.getBoolean("status");
+                Session a = new Session(id, date, roomID, groupID, timeslotID, status);
                 list.add(a);
             }
             return list;
@@ -45,85 +55,93 @@ public class SessionDAO extends DBContext {
         return null;
     }
 
-    public ArrayList<Session> list(int did, int numberOfWeek) {
-        int timeslotID = did;
+    public boolean getStatus(int id) {
         try {
-            ArrayList<Session> ds = new ArrayList<>();
-            PreparedStatement sql = connection.prepareStatement("select * from [Session] where timeslotID = ? and numberOfWeek = ?");
-            sql.setInt(1, timeslotID);
-            sql.setInt(2, numberOfWeek);
-            ResultSet rs = sql.executeQuery();
-            while (rs.next()) {
-                Session a = new Session();
-                a.setTimeslotID(timeslotID);
-                a.setId(rs.getInt("id"));
-                a.setDate(rs.getDate("date"));
-                a.setRoomID(rs.getInt("roomID"));
-                a.setGroupID(rs.getInt("name"));
-                a.setAttendance(rs.getBoolean("attendance"));
-                a.setNumberOfWeek(rs.getInt("numberOfWeek"));
-                ds.add(a);
-            }
-            return ds;
+            String sql = "Select status from [session] where id = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            return rs.getBoolean("status");
         } catch (SQLException ex) {
         }
-        return null;
+        return false;
     }
 
-    public ArrayList<Session> listAllLessonInThisWeekAndLecture(int numberOfWeek, String lecture) {
-        try {
-            ArrayList<Session> ds = new ArrayList<>();
-            PreparedStatement sql = connection.prepareStatement("SELECT\n"
+    public ArrayList<Session> getListSessionStudent(int sid, java.util.Date from, java.util.Date to) {
+        ArrayList<Session> sesssions = new ArrayList<>();
+        String sql = "SELECT\n"
                     + "[Session].id,\n"
-                    + "lecture.lecName as Lecture,\n"
-                    + " [Session].[date] as Date ,\n"
-                    + "Room.rName as Room,\n"
-                    + "[Group].[Name] as Class,\n"
-                    + "TimeSlot.[description] as Slot,\n"
-                    + "[Session].attendance as Attendance, \n"
-                    + "[Subject].[name] as [Subject]\n"
+                    + "[Session].[date],\n"
+                    + "Attendance.[status],\n"
+                    + "lecture.lecName,\n"
+                    + "[Group].[Name],\n"
+                    + "Room.rName,\n"
+                    + "[Subject].[name],\n"
+                    + "timeslot.id,\n"
+                    + "TimeSlot.[description]\n"
                     + "FROM [Session]\n"
                     + "INNER JOIN Room ON [Session].roomID = Room.id\n"
                     + "INNER JOIN [Group] ON [Session].groupID = [Group].id\n"
                     + "INNER JOIN TimeSlot ON [Session].timeslotID = TimeSlot.id\n"
-                    + "INNER JOIN attendance ON [Session].timeslotID = TimeSlot.id\n"
+                    + "INNER JOIN Attendance ON [Session].id = Attendance.sessionID\n"
+                    + "INNER JOIN Student ON  Student.id = Attendance.studentID\n"
                     + "INNER JOIN [Subject] ON [Group].SubjectID = [Subject].id\n"
                     + "INNER JOIN lecture ON [Group].lectureID = lecture.id\n"
-                    + "GROUP BY [Session].id,\n"
-                    + "lecture.lecName,\n"
-                    + " [Session].[date],\n"
-                    + "Room.rName,\n"
-                    + "[Group].[Name],\n"
-                    + "TimeSlot.[description] ,\n"
-                    + "[Session].attendance, \n"
-                    + "[Subject].[name]");
-            sql.setString(1, "%" + lecture + "%");
-            sql.setInt(2, numberOfWeek);
-            ResultSet rs = sql.executeQuery();
+                    + "WHERE Attendance.studentID = ?\n"
+                    + "AND [Session].date >= ?\n"
+                    + "AND [Session].date <= ?";
+        try {
+            
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, sid);
+            st.setDate(2, DateTimeHelper.toDateSql(from));
+            st.setDate(3, DateTimeHelper.toDateSql(to));
+            ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Session a = new Session();
-                a.setId(rs.getInt("id"));
-                a.setGroup(new Group(rs.getString("group"),
-                        new Course(rs.getString("courseID"), rs.getString("courseName")),
-                        new Instructor(rs.getString("instructorID"), rs.getString("instructorName"))
-                )
-                );
-                a.setName(rs.getString("name"));
-                a.setSlot(rs.getInt("slot"));
-                a.setRoom(rs.getString("room"));
-                a.setDate(rs.getDate("date"));
-                a.setNumberOfWeek(rs.getInt("numberOfWeek"));
+                Session s = new Session();
+                s.setId(rs.getInt("id"));
+                s.setDate(rs.getDate("date"));
+                s.setStatus(rs.getBoolean("status"));
 
-                ds.add(a);
+                Attendance attendance = new Attendance();
+//                attendance.setStatus(rs.getBoolean("status"));
+//                s.setAttendance(attendance);
+//                lec.setId(rs.getInt("id"));
+
+                Lecture lec = new Lecture();
+                lec.setLecName(rs.getString("lecName"));
+                s.setLecture(lec);
+
+                Group group = new Group();
+//                group.setId(rs.getInt("id"));
+                group.setName(rs.getString("name"));
+                s.setGroup(group);
+
+                Room room = new Room();
+//                room.setId(rs.getInt("id"));
+                room.setName(rs.getString("rName"));
+                s.setRoom(room);
+
+                Subject sub = new Subject();
+//                sub.setId(rs.getInt("id"));
+                sub.setName(rs.getString("name"));
+                s.setSubject(sub);
+
+                TimeSlot timeslot = new TimeSlot();
+                timeslot.setId(rs.getInt("id"));
+                timeslot.setDescription(rs.getString("description"));
+                s.setTimeslot(timeslot);
+                sesssions.add(s);
             }
-            return ds;
         } catch (SQLException ex) {
         }
-        return null;
+        return sesssions;
     }
 
-    public static void main(String[] args) {
-        SessionDAO pro = new SessionDAO();
-        System.out.println("" + pro.listAllLessonInThisWeekAndLecture(1, lecture));
-    }
+//    public static void main(String[] args) {
+//
+//        SessionDAO pro = new SessionDAO();
+//        System.out.println("" + pro. getStatus());
+//    }
+
 }

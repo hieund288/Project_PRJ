@@ -12,9 +12,10 @@ import java.util.ArrayList;
  * @author l
  */
 public class Attendance {
+
     private int studentID;
     private int sessionID;
-    private boolean present;
+    private boolean status;
     private Date Time;
     private String Description;
     private ArrayList<Student> students = new ArrayList<>();
@@ -23,10 +24,10 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Attendance(int studentID, int sessionID, boolean present, Date Time, String Description) {
+    public Attendance(int studentID, int sessionID, boolean status, Date Time, String Description) {
         this.studentID = studentID;
         this.sessionID = sessionID;
-        this.present = present;
+        this.status = status;
         this.Time = Time;
         this.Description = Description;
     }
@@ -47,12 +48,12 @@ public class Attendance {
         this.sessionID = sessionID;
     }
 
-    public boolean isPresent() {
-        return present;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setPresent(boolean present) {
-        this.present = present;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Date getTime() {
@@ -89,7 +90,7 @@ public class Attendance {
 
     @Override
     public String toString() {
-        return "Attendance{" + "studentID=" + studentID + ", sessionID=" + sessionID + ", present=" + present + ", Time=" + Time + ", Description=" + Description + '}';
+        return "Attendance{" + "studentID=" + studentID + ", sessionID=" + sessionID + ", status=" + status + ", Time=" + Time + ", Description=" + Description + ", students=" + students + ", sessions=" + sessions + '}';
     }
-    
+
 }

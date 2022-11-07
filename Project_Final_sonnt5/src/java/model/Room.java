@@ -15,6 +15,7 @@ public class Room {
     private int id;
     private String name;
     private ArrayList<Group> groups = new ArrayList<>();
+    private ArrayList<Session> session = new ArrayList<>();
 
     public Room() {
     }
@@ -46,6 +47,14 @@ public class Room {
 
     public void setGroups(ArrayList<Group> groups) {
         this.groups = groups;
+    }
+
+    public ArrayList<Session> getSession() {
+        return session;
+    }
+
+    public void setSession(ArrayList<Session> session) {
+        this.session = session;
     }
 
     @Override

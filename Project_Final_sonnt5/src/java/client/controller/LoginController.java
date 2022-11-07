@@ -29,6 +29,8 @@ public class LoginController extends HttpServlet {
         Account acc = accdao.check(username, password);
         HttpSession session = req.getSession();
         session.setAttribute("account", acc);
+        req.getSession().setAttribute("acc", acc);
+
         if (acc == null) {
             req.setAttribute("error", "Account not existed!");
             req.getRequestDispatcher("client/login.jsp").forward(req, resp);

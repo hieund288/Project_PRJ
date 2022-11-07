@@ -15,6 +15,7 @@ public class Lecture {
     private int id;
     private String lecName;
     private ArrayList<Group> groups = new ArrayList<>();
+    
 
     public Lecture() {
     }

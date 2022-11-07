@@ -16,7 +16,7 @@
     <body>
         <%@include file="../navigator/header.jsp" %>
 
-
+        
         <div class="container">
             <!-- Header -->
 

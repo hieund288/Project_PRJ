@@ -13,13 +13,13 @@ import java.util.ArrayList;
 public class TimeSlot {
 
     private int id;
-    private int description;
+    private String description;
     private ArrayList<Group> groups = new ArrayList<>();
 
     public TimeSlot() {
     }
 
-    public TimeSlot(int id, int description) {
+    public TimeSlot(int id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -32,11 +32,11 @@ public class TimeSlot {
         this.id = id;
     }
 
-    public int getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(int description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

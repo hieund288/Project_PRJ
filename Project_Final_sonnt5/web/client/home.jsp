@@ -17,7 +17,7 @@
         <%@include file="../navigator/header.jsp" %>
         <div class="container">
             <!-- Header -->
-
+           
             <div class="row">
                 <div class="col-md-12" style="background-color: #F5F5F5">
                     <div>

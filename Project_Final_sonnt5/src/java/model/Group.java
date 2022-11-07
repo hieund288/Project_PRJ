@@ -11,22 +11,24 @@ import java.util.ArrayList;
  * @author l
  */
 public class Group {
+
     private int id;
     private String name;
     private int subjectID;
     private int lectureID;
+    private Lecture lecture;
     private ArrayList<Student> students = new ArrayList<>();
     private ArrayList<Subject> subjects = new ArrayList<>();
-    private ArrayList<Lecture> lectures = new ArrayList<>();
-    
+
     public Group() {
     }
 
-    public Group(int id, String name, int subjectID, int lectureID) {
+    public Group(int id, String name, int subjectID, int lectureID, Lecture lecture) {
         this.id = id;
         this.name = name;
         this.subjectID = subjectID;
         this.lectureID = lectureID;
+        this.lecture = lecture;
     }
 
     public int getId() {
@@ -77,17 +79,17 @@ public class Group {
         this.subjects = subjects;
     }
 
-    public ArrayList<Lecture> getLectures() {
-        return lectures;
+    public Lecture getLecture() {
+        return lecture;
     }
 
-    public void setLectures(ArrayList<Lecture> lectures) {
-        this.lectures = lectures;
+    public void setLecture(Lecture lecture) {
+        this.lecture = lecture;
     }
 
     @Override
     public String toString() {
         return "Group{" + "id=" + id + ", name=" + name + ", subjectID=" + subjectID + ", lectureID=" + lectureID + '}';
     }
-    
+
 }

@@ -18,32 +18,47 @@ public class Session {
     private int roomID;
     private int groupID;
     private int timeslotID;
-    private boolean attendance;
-    private int numberOfWeek;
-    private ArrayList<Attendance> attendances = new ArrayList<>();
-    private ArrayList<Group> groups = new ArrayList<>();
-    private ArrayList<Room> rooms = new ArrayList<>();
-    private ArrayList<TimeSlot> timeslots = new ArrayList<>();
+    private boolean status;
+    private Attendance attendances;
+    private Group group;
+    private Room room;
+    private Subject subject;
+    private TimeSlot timeslot;
+    private Lecture lecture;
 
     public Session() {
     }
 
-    public Session(int id, Date date, int roomID, int groupID, int timeslotID, boolean attendance, int numberOfWeek) {
+    public Session(int id, Date date, int roomID, int groupID, int timeslotID, boolean status, Attendance attendances, Group group, Room room, Subject subject, TimeSlot timeslot, Lecture lecture) {
         this.id = id;
         this.date = date;
         this.roomID = roomID;
         this.groupID = groupID;
         this.timeslotID = timeslotID;
-        this.attendance = attendance;
-        this.numberOfWeek = numberOfWeek;
+        this.status = status;
+        this.attendances = attendances;
+        this.group = group;
+        this.room = room;
+        this.subject = subject;
+        this.timeslot = timeslot;
+        this.lecture = lecture;
     }
 
-    public int getNumberOfWeek() {
-        return numberOfWeek;
+    public Session(int id, Date date, int roomID, int groupID, int timeslotID, boolean status) {
+        this.id = id;
+        this.date = date;
+        this.roomID = roomID;
+        this.groupID = groupID;
+        this.timeslotID = timeslotID;
+        this.status = status;
     }
 
-    public void setNumberOfWeek(int numberOfWeek) {
-        this.numberOfWeek = numberOfWeek;
+    public Lecture getLecture() {
+        return lecture;
+    }
+
+    public void setLecture(Lecture lecture) {
+        this.lecture = lecture;
     }
 
     public int getId() {
@@ -86,49 +101,65 @@ public class Session {
         this.timeslotID = timeslotID;
     }
 
-    public ArrayList<Attendance> getAttendances() {
+    public Attendance getAttendance() {
         return attendances;
     }
 
-    public void setAttendances(ArrayList<Attendance> attendances) {
+    public void setAttendance(Attendance attendance) {
+        this.attendances = attendance;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public TimeSlot getTimeslot() {
+        return timeslot;
+    }
+
+    public void setTimeslot(TimeSlot timeslot) {
+        this.timeslot = timeslot;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Attendance getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(Attendance attendances) {
         this.attendances = attendances;
-    }
-
-    public ArrayList<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(ArrayList<Group> groups) {
-        this.groups = groups;
-    }
-
-    public ArrayList<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(ArrayList<Room> rooms) {
-        this.rooms = rooms;
-    }
-
-    public ArrayList<TimeSlot> getTimeslots() {
-        return timeslots;
-    }
-
-    public void setTimeslots(ArrayList<TimeSlot> timeslots) {
-        this.timeslots = timeslots;
-    }
-
-    public boolean isAttendance() {
-        return attendance;
-    }
-
-    public void setAttendance(boolean attendance) {
-        this.attendance = attendance;
     }
 
     @Override
     public String toString() {
-        return "Session{" + "id=" + id + ", date=" + date + ", roomID=" + roomID + ", groupID=" + groupID + ", timeslotID=" + timeslotID + ", attendance=" + attendance + '}';
+        return "Session{" + "id=" + id + ", date=" + date + ", roomID=" + roomID + ", groupID=" + groupID + ", timeslotID=" + timeslotID + ", status=" + status + ", attendances=" + attendances + ", group=" + group + ", room=" + room + ", subject=" + subject + ", timeslot=" + timeslot + ", lecture=" + lecture + '}';
     }
 
 }

@@ -42,7 +42,7 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             //process business
             processGet(req, resp);
         } else {
-            req.getRequestDispatcher("client/login.jsp").forward(req, resp);
+            resp.sendRedirect("login");
         }
     }
 
