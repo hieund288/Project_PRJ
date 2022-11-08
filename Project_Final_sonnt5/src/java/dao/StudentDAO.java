@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Student;
 
 /**
@@ -35,9 +37,27 @@ public class StudentDAO extends DBContext {
         }
         return list;
     }
+    public Student getStuByID(int id) {
+        try {
+            String sql = "SELECT * FROM Student WHERE id = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if(rs.next())
+            {
+                Student l = new Student();
+                l.setId(rs.getInt("id"));
+                l.setName(rs.getString("name"));
+                l.setCode(rs.getString("code"));
+                return l;
+            }
+        } catch (SQLException ex) {
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         StudentDAO pro = new StudentDAO();
-        System.out.println("" + pro.ListStudent());
+        System.out.println("" + pro.getStuByID(2));
     }
 }

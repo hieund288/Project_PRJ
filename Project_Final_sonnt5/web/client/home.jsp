@@ -23,7 +23,7 @@
                     <div>
                         <div style="float: right; margin-right: 16px;">
                             <a href="">
-                                <span class="label label-success">${account.username} ${student.code}</span></a> | <a href="logout" class="label label-success">logout</a> |
+                                <span class="label label-success">${account.id}</span></a> | <a href="logout" class="label label-success">logout</a> |
                             <span class="label label-success"> CAMPUS: FPTU-Hòa Lạc</span>
                         </div>
                     </div>

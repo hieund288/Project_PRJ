@@ -25,6 +25,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        String name = req.getParameter("name");
         AccountDAO accdao = new AccountDAO();
         Account acc = accdao.check(username, password);
         HttpSession session = req.getSession();

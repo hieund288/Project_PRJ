@@ -6,6 +6,7 @@ package student.controller;
 
 import auth.controller.BaseAuthenticationController;
 import auth.controller.BaseRoleController;
+import dao.AccountDAO;
 import dao.SessionDAO;
 import dao.SubjectDAO;
 import dao.TimeSlotDAO;
@@ -44,7 +45,8 @@ public class TimeTableController extends BaseRoleController {
         String to_e = req.getParameter("to");
         java.sql.Date from = null;
         java.sql.Date to = null;
-        SessionDAO sessionDB = new SessionDAO();
+        SessionDAO sessiondao = new SessionDAO();
+
         if (from_e == null || from_e.length() == 0 || to_e == null || to_e.length() == 0 || DateTimeHelper.compare(java.sql.Date.valueOf(from_e), java.sql.Date.valueOf(to_e)) == 1) {
             Date today = new Date();
             int todayOfWeek = DateTimeHelper.getDayofWeek(today);
@@ -61,11 +63,15 @@ public class TimeTableController extends BaseRoleController {
         }
 
         TimeSlotDAO timeslotdb = new TimeSlotDAO();
+
         ArrayList<TimeSlot> timeslots = timeslotdb.list();// 
-        ArrayList<Session> sessions = sessionDB.getListSessionStudent(sid, from, to);
+        
+        ArrayList<Session> sessions = sessiondao.getListSessionStudent(sid, from, to);
 
         SubjectDAO sub = new SubjectDAO();
         ArrayList<Subject> subjects = sub.list();
+
+
         req.setAttribute("subjects", subjects);
         req.setAttribute("from", from);
         req.setAttribute("to", to);

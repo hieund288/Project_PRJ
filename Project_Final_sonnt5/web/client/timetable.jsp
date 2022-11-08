@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:useBean id="helper" class="helper.DateTimeHelper"/>
 <jsp:useBean id="subject" class="dao.SubjectDAO"/> 
+<%@page import="Models.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,6 +20,7 @@
     <body>
 
         <%@include file="../navigator/header.jsp" %>
+
         <div class="container">
             <!-- Header -->
             <div class="row">
@@ -35,25 +37,29 @@
                     </div>
                 </div>
             </div>
+            <h1>Activities for ${sessionScope.account.username} ${sessionScope.account.name}</h1>
+            
+            Ddcu cm
+            <c:forEach items="${requestScope.sessions}" var="session">
+                ${session.getDate()}
+            </c:forEach>
+
+
             <!-- End Header -->
-             ${pageContext.request.contextPath}
-             ${sessionScope.account.id}<br/>
-             ${pageContext.request.contextPath}/timetable?sid=${sessionScope.account.id}&from=${param.from}&to=${param.to}
-             
             <div style="display: flex; justify-content: center;">
                 <table class="content-table">
                     <thead >
                         <tr>
                             <th>
-                                <form action="${pageContext.request.contextPath}/timetable?sid=${sessionScope.account}&from=${param.from}&to=${param.to}" method="GET">
+                                <form action="" method="GET">
                                     Date From: <input type="date" name="from" value="${requestScope.from}"><br/>
                                     Date To: <input type="date" name="to" value="${requestScope.to}"}>
-                                    <button type="submit" ><i class="fa-solid fa-eye"></i></button>
-
+                                    <button type="submit" ><i class="fa-solid fa-eye">Search</i></button>
                                 </form> 
                             </th>
+
                             <c:forEach items="${requestScope.datelist}" var="datelist">
-                                <th>${datelist}<br/> ${helper.getDayNameofWeek(datelist)}</th> 
+                                <th> ${helper.getDayNameofWeek(datelist)} <br/> ${datelist}</th> 
                                 </c:forEach>
                         </tr>
                     </thead>
@@ -64,6 +70,7 @@
                                     <c:forEach items="${requestScope.datelist}" var="datelist">
                                     <td align="center" >
                                         <c:set var="num" value="0">
+
                                         </c:set>
                                         <c:forEach items="${requestScope.sessions}" var="session">
                                             <c:if test="${helper.compare(datelist,session.date) eq 0 and (session.timeslot.id eq s.id)}">
@@ -97,15 +104,17 @@
                         </c:forEach>
                     </tbody>
                 </table>
+
             </div>
+            <p>
+                <b>More note / Chú thích thêm</b>:
+            </p>
+            <div><ul><li>(<font color="green">attended</font>): ${sessionScope.account.name}  had attended this activity / ${sessionScope.account.username} đã tham gia hoạt động này</li><li>(<font color="red">absent</font>): ${sessionScope.account.username} had NOT attended this activity / ${sessionScope.account.username} đã vắng mặt buổi này</li>   <li>(-): no data was given / chưa có dữ liệu</li> </ul></div>
+
         </div>
 
 
-        <!-- End Body -->
-        <p>
-            <b>More note / Chú thích thêm</b>:
-        </p>
-        <div id="ctl00_mainContent_divfoot"><ul><li>(<font color="green">attended</font>): HieuNDHE150417 had attended this activity / Nguyễn Đức Hiếu đã tham gia hoạt động này</li><li>(<font color="red">absent</font>): HieuNDHE150417 had NOT attended this activity / Nguyễn Đức Hiếu đã vắng mặt buổi này</li>   <li>(-): no data was given / chưa có dữ liệu</li> </ul></div>
+
 
 
 

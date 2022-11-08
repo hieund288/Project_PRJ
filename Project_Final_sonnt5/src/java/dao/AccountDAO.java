@@ -57,6 +57,7 @@ public class AccountDAO extends DBContext {
         String a = "hieu";
         String b = "hieu";
         AccountDAO acc = new AccountDAO();
-        System.out.println("" + acc.check(a, b));
+//        System.out.println("" + acc.check(a, b));
+        System.out.println("" + acc.getAll());
     }
 }

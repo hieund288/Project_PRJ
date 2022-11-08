@@ -143,7 +143,7 @@ public class SessionDAO extends DBContext {
 
     public static void main(String[] args) {
         SessionDAO pro = new SessionDAO();
-        System.out.println("" + pro.getListSessionStudent(1, Date.valueOf("2022-07-11"), Date.valueOf("2022-07-11")));
+        System.out.println("" + pro.getListSessionStudent(1, Date.valueOf("2022-11-07"), Date.valueOf("2022-11-07")));
 //        System.out.println("" + pro.getAll());
     }
 }
