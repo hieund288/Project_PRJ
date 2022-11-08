@@ -54,8 +54,6 @@ public class Session {
         this.student = student;
     }
 
-    
-
     public Session(int id, Date date, int roomID, int groupID, int timeslotID, boolean status) {
         this.id = id;
         this.date = date;

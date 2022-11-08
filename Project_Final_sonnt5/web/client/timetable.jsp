@@ -17,6 +17,7 @@
         <link href="style/css/TimeTable.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+
         <%@include file="../navigator/header.jsp" %>
         <div class="container">
             <!-- Header -->
@@ -35,78 +36,65 @@
                 </div>
             </div>
             <!-- End Header -->
-
+             ${pageContext.request.contextPath}
+             ${sessionScope.account.id}<br/>
+             ${pageContext.request.contextPath}/timetable?sid=${sessionScope.account.id}&from=${param.from}&to=${param.to}
+             
             <div style="display: flex; justify-content: center;">
                 <table class="content-table">
                     <thead >
                         <tr>
-                            <th >
-                                <form action="${pageContext.request.contextPath}/student/timetable?sid=${sessionScope.account.id}&from=${param.from}&to=${param.to}" method="GET">
+                            <th>
+                                <form action="${pageContext.request.contextPath}/timetable?sid=${sessionScope.account}&from=${param.from}&to=${param.to}" method="GET">
                                     Date From: <input type="date" name="from" value="${requestScope.from}"><br/>
                                     Date To: <input type="date" name="to" value="${requestScope.to}"}>
                                     <button type="submit" ><i class="fa-solid fa-eye"></i></button>
 
                                 </form> 
-
                             </th>
                             <c:forEach items="${requestScope.datelist}" var="datelist">
                                 <th>${datelist}<br/> ${helper.getDayNameofWeek(datelist)}</th> 
                                 </c:forEach>
-
                         </tr>
-
                     </thead>
                     <tbody>
+                        <c:forEach items="${requestScope.timeslots}" var="s">
+                            <tr >
+                                <td style="background-color: #A4C3A2;">Slot ${s.id}<br/> ${s.description}</td>
+                                    <c:forEach items="${requestScope.datelist}" var="datelist">
+                                    <td align="center" >
+                                        <c:set var="num" value="0">
+                                        </c:set>
+                                        <c:forEach items="${requestScope.sessions}" var="session">
+                                            <c:if test="${helper.compare(datelist,session.date) eq 0 and (session.timeslot.id eq s.id)}">
+                                                <c:set var="num" value="1"/>
+                                                <a style='text-decoration: none '  href="#" onclick="slotStatus(${session.status})">${session.group.id}</a><br/>
+                                                at ${session.room.name} <br/>
+                                                <c:if test="${session.status eq true  }">
+                                                    <i style="color: green   ">(Attend)</i>
+                                                </c:if>
+                                                <c:if test="${session.status eq false and (helper.compare(helper.dateToday(),datelist) == 1)}" >
+                                                    <i style="color: red   ">(Absent)</i>
+                                                </c:if>
+                                                <c:if test="${helper.compare(helper.dateToday(),datelist) == 0 and (session.status ne null)}">
+                                                    <i style="color: blue   ">(Happening)</i>
+                                                </c:if>    
+                                                <c:if test="${session.status ne null and (helper.compare(helper.dateToday(),datelist) < 0)}">
+                                                    <i style="color: yellow   ">(Not yet)</i>
+                                                </c:if>
 
-                    <h1>${account.username}</h1>
-                    <h1>${requestScope.sessions}</h1>
-                    <c:forEach items="${requestScope.sessions}" var="session">
-                        <h1>${session.student.name}</h1>
-                    </c:forEach>
-
-
-
-
-
-                    <c:forEach items="${requestScope.timeslots}" var="s">
-                        <tr >
-                            <td style="background-color: #A4C3A2;">Slot ${s.id}<br/> ${s.description}</td>
-                                <c:forEach items="${requestScope.datelist}" var="datelist">
-                                <td align="center" >
-                                    <c:set var="num" value="0">
-                                    </c:set>
-                                    <c:forEach items="${requestScope.sessions}" var="session">
-                                        <c:if test="${helper.compare(datelist,session.date) eq 0 and (session.timeslot.id eq s.id)}">
-                                            <c:set var="num" value="1"/>
-
-                                            <a style='text-decoration: none '  href="#" onclick="slotStatus(${session.status})">${session.group.id}</a><br/>
-
-                                            at ${session.room.name} <br/>
-                                            <c:if test="${session.status eq true  }">
-                                                <i style="color: green   ">(Attend)</i>
                                             </c:if>
-                                            <c:if test="${session.status eq false and (helper.compare(helper.dateToday(),datelist) == 1)}" >
-                                                <i style="color: red   ">(Absent)</i>
-                                            </c:if>
-                                            <c:if test="${helper.compare(helper.dateToday(),datelist) == 0 and (session.status ne null)}">
-                                                <i style="color: blue   ">(Happening)</i>
-                                            </c:if>    
-                                            <c:if test="${session.status ne null and (helper.compare(helper.dateToday(),datelist) < 0)}">
-                                                <i style="color: yellow   ">(Not yet)</i>
-                                            </c:if>
-
+                                        </c:forEach>
+                                        <c:if test="${num eq 0}">
+                                            -
                                         </c:if>
-                                    </c:forEach>
-                                    <c:if test="${num eq 0}">
-                                        -
-                                    </c:if>
 
-                                </td>
+                                    </td>
 
 
-                            </c:forEach>
-                        </tr>
-                    </c:forEach>
+                                </c:forEach>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>

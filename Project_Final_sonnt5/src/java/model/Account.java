@@ -15,31 +15,21 @@ public class Account {
     private int id;
     private String username;
     private String password;
+    private String name;
     private int role;
-    private int lecID;
-    private int stuID;
+
+    public Account(int id, String username, String password, String name, int role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.role = role;
+    }
 
     public Account() {
     }
 
-    public Account(int id, String username, String password, int role, int lecID, int stuID) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.lecID = lecID;
-        this.stuID = stuID;
-    }
-
     public Account(String username, String password, int role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-
-    }
-
-    public Account(int id, String username, String password, int role) {
-        this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -69,6 +59,14 @@ public class Account {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getRole() {
         return role;
     }
@@ -77,25 +75,9 @@ public class Account {
         this.role = role;
     }
 
-    public int getLecID() {
-        return lecID;
-    }
-
-    public void setLecID(int lecID) {
-        this.lecID = lecID;
-    }
-
-    public int getStuID() {
-        return stuID;
-    }
-
-    public void setStuID(int stuID) {
-        this.stuID = stuID;
-    }
-
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + ", lecID=" + lecID + ", stuID=" + stuID + '}';
+        return "Account{" + "id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", role=" + role + '}';
     }
 
 }

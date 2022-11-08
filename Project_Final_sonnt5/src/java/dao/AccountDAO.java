@@ -27,9 +27,8 @@ public class AccountDAO extends DBContext {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 int role = rs.getInt("role");
-                int lecID = rs.getInt("lecID");
-                int stuID = rs.getInt("stuID");
-                Account a = new Account(id, username, password, role, lecID, stuID);
+                String name = rs.getString("name");
+                Account a = new Account(id, username, password, name, role);
                 list.add(a);
             }
         } catch (SQLException e) {
