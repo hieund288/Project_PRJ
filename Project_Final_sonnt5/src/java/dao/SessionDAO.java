@@ -33,28 +33,28 @@ import model.TimeSlot;
  */
 public class SessionDAO extends DBContext {
 
-    public ArrayList<Session> getAll() {
-
-        ArrayList<Session> list = new ArrayList<>();
-        String sql = "Select * from session";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                Date date = rs.getDate("date");
-                int roomID = rs.getInt("roomID");
-                int groupID = rs.getInt("groupID");
-                int timeslotID = rs.getInt("timeslotID");
-                boolean status = rs.getBoolean("status");
-                Session a = new Session(id, date, roomID, groupID, timeslotID, status);
-                list.add(a);
-            }
-            return list;
-        } catch (SQLException e) {
-        }
-        return null;
-    }
+//    public ArrayList<Session> getAll() {
+//
+//        ArrayList<Session> list = new ArrayList<>();
+//        String sql = "Select * from session";
+//        try {
+//            PreparedStatement st = connection.prepareStatement(sql);
+//            ResultSet rs = st.executeQuery();
+//            while (rs.next()) {
+//                int id = rs.getInt("id");
+//                Date date = rs.getDate("date");
+//                int roomID = rs.getInt("roomID");
+//                int groupID = rs.getInt("groupID");
+//                int timeslotID = rs.getInt("timeslotID");
+//                boolean status = rs.getBoolean("status");
+//                Session a = new Session(id, date, roomID, groupID, timeslotID, status);
+//                list.add(a);
+//            }
+//            return list;
+//        } catch (SQLException e) {
+//        }
+//        return null;
+//    }
 
     public boolean getStatus(int id) {
         try {
@@ -84,7 +84,6 @@ public class SessionDAO extends DBContext {
                 + "TimeSlot.[description]\n"
                 + "FROM [Session]\n"
                 + "INNER JOIN Room ON [Session].roomID = Room.id\n"
-                + "\n"
                 + "INNER JOIN [Group] ON [Session].groupID = [Group].id\n"
                 + "INNER JOIN TimeSlot ON [Session].timeslotID = TimeSlot.id\n"
                 + "INNER JOIN Attendance ON [Session].id = Attendance.sessionID\n"
@@ -108,7 +107,7 @@ public class SessionDAO extends DBContext {
 
                 Attendance attendance = new Attendance();
                 attendance.setStatus(rs.getBoolean("status"));
-                s.setAttendance(attendance);
+                s.setAttendances(attendance);
 
                 Student student = new Student();
                 student.setName(rs.getString("name"));
@@ -133,7 +132,7 @@ public class SessionDAO extends DBContext {
 
                 TimeSlot timeslot = new TimeSlot();
                 timeslot.setId(rs.getInt("id"));
-                timeslot.setDescription(rs.getString("description   "));
+                timeslot.setDescription(rs.getString("description"));
                 s.setTimeslot(timeslot);
                 sesssions.add(s);
             }
@@ -143,8 +142,8 @@ public class SessionDAO extends DBContext {
     }
 
     public static void main(String[] args) {
-
         SessionDAO pro = new SessionDAO();
-        System.out.println("" + pro.getListSessionStudent(2, Date.valueOf("2022-07-11"), Date.valueOf("2022-07-11")));
+        System.out.println("" + pro.getListSessionStudent(1, Date.valueOf("2022-07-11"), Date.valueOf("2022-07-11")));
+//        System.out.println("" + pro.getAll());
     }
 }
