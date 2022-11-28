@@ -38,12 +38,6 @@
                 </div>
             </div>
             <h1>Activities for ${sessionScope.account.username} ${sessionScope.account.name}</h1>
-            
-            Ddcu cm
-            <c:forEach items="${requestScope.sessions}" var="session">
-                ${session.getDate()}
-            </c:forEach>
-
 
             <!-- End Header -->
             <div style="display: flex; justify-content: center;">
@@ -64,6 +58,8 @@
                         </tr>
                     </thead>
                     <tbody>
+                        ${requestScope.sessions}
+                        ${requestScope.abc}
                         <c:forEach items="${requestScope.timeslots}" var="s">
                             <tr >
                                 <td style="background-color: #A4C3A2;">Slot ${s.id}<br/> ${s.description}</td>
@@ -89,7 +85,6 @@
                                                 <c:if test="${session.status ne null and (helper.compare(helper.dateToday(),datelist) < 0)}">
                                                     <i style="color: yellow   ">(Not yet)</i>
                                                 </c:if>
-
                                             </c:if>
                                         </c:forEach>
                                         <c:if test="${num eq 0}">

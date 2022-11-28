@@ -65,7 +65,7 @@ public class TimeTableController extends BaseRoleController {
         TimeSlotDAO timeslotdb = new TimeSlotDAO();
 
         ArrayList<TimeSlot> timeslots = timeslotdb.list();// 
-        
+        req.setAttribute("abc", sid + " " + from + " " + to);
         ArrayList<Session> sessions = sessiondao.getListSessionStudent(sid, from, to);
 
         SubjectDAO sub = new SubjectDAO();
@@ -76,9 +76,11 @@ public class TimeTableController extends BaseRoleController {
         req.setAttribute("from", from);
         req.setAttribute("to", to);
         req.setAttribute("datelist", DateTimeHelper.getDateList(from, to));
+        
         req.setAttribute("timeslots", timeslots);
         req.setAttribute("sessions", sessions);
         req.getRequestDispatcher("client/timetable.jsp").forward(req, resp);
+        
     }
 
 }

@@ -69,6 +69,7 @@ public class SessionDAO extends DBContext {
     }
 
     public ArrayList<Session> getListSessionStudent(int sid, java.util.Date from, java.util.Date to) {
+        System.out.println("From dcu trg "+ sid + " " + from + " " + to);
         ArrayList<Session> sesssions = new ArrayList<>();
         String sql = "SELECT\n"
                 + "[Session].id,\n"
@@ -137,13 +138,14 @@ public class SessionDAO extends DBContext {
                 sesssions.add(s);
             }
         } catch (SQLException ex) {
+            System.out.println("SQL " + ex);
         }
         return sesssions;
     }
 
-    public static void main(String[] args) {
-        SessionDAO pro = new SessionDAO();
-        System.out.println("" + pro.getListSessionStudent(1, Date.valueOf("2022-11-07"), Date.valueOf("2022-11-07")));
-//        System.out.println("" + pro.getAll());
-    }
+//    public static void main(String[] args) {
+//        SessionDAO pro = new SessionDAO();
+//        System.out.println("" + pro.getListSessionStudent(1, Date.valueOf("2022-11-07"), Date.valueOf("2022-11-07")));
+////        System.out.println("" + pro.getAll());
+//    }
 }
